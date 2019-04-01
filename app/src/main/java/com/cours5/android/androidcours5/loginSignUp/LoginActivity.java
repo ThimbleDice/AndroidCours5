@@ -1,4 +1,4 @@
-package com.cours5.android.androidcours5;
+package com.cours5.android.androidcours5.loginSignUp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,23 +8,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cours5.android.androidcours5.MainActivity;
+import com.cours5.android.androidcours5.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignUpActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
         setListener();
     }
 
     private void setListener(){
-        findViewById(R.id.button_signUp).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUpUser();
@@ -33,30 +35,23 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUpUser(){
-        EditText userEmail = findViewById(R.id.editText_signUpEmail);
-        EditText userPassword = findViewById(R.id.editText_signUpPassword);
-        EditText userPasswordConfirm = findViewById(R.id.editText_signUpPasswordConfirm);
+        EditText userEmail = findViewById(R.id.editText_loginEmail);
+        EditText userPassword = findViewById(R.id.editText_loginPassword);
 
-        /*
-        if(userPassword.getText().toString() != userPasswordConfirm.getText().toString()){
-            Toast.makeText(this, "Password doesn't match", Toast.LENGTH_LONG).show();
-            return;
-        }
-        */
-
-        auth.createUserWithEmailAndPassword(userEmail.getText().toString(), userPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(userEmail.getText().toString(), userPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     sendToMainActivity();
                 }else{
-                    Toast.makeText(getApplicationContext(), "Failed to sign up", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Failed to login", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
+
     private void sendToMainActivity(){
-        Intent sendToLogin = new Intent(this, LoginActivity.class);
-        startActivity(sendToLogin);
+        Intent sendToSignUp = new Intent(this, MainActivity.class);
+        startActivity(sendToSignUp);
     }
 }

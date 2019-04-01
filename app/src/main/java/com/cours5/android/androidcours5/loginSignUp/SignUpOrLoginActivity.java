@@ -1,9 +1,11 @@
-package com.cours5.android.androidcours5;
+package com.cours5.android.androidcours5.loginSignUp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.cours5.android.androidcours5.R;
 
 public class SignUpOrLoginActivity extends AppCompatActivity {
 
